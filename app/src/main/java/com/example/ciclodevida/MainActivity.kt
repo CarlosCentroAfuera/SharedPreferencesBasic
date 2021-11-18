@@ -32,6 +32,17 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onStop() {
+        Log.d("MiTAG", "onStop $onStop")
+        onStop++
+        with(getSharedPreferences("Prefs", Context.MODE_PRIVATE).edit()) {
+            putString("TAG", binding.etHelloWorld.text.toString())
+            commit()
+        }
+
+        super.onStop()
+    }
+
     override fun onStart() {
         super.onStart()
         Log.d("MiTAG", "onStart $onStart")
@@ -50,15 +61,7 @@ class MainActivity : AppCompatActivity() {
         onPause++
     }
 
-    override fun onStop() {
-        Log.d("MiTAG", "onStop $onStop")
-        onStop++
-        val sharedPreferences = getSharedPreferences("Prefs", Context.MODE_PRIVATE)
-        val preferenciasEditables = sharedPreferences.edit()
-        preferenciasEditables.putString("TAG", binding.etHelloWorld.text.toString())
-        preferenciasEditables.commit()
-        super.onStop()
-    }
+
 
     override fun onDestroy() {
         Log.d("MiTAG", "onDestroy $onDestroy")
